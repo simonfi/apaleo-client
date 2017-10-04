@@ -1,0 +1,6 @@
+# Ignore 3rd party dependencies installed through composer
+vendor
+
+# Don't maintain composer state in git repository
+composer.lock
+

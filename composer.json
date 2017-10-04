@@ -1,0 +1,20 @@
+{
+    "name": "loopon/apaleo-client",
+    "description": "Apaleo API Client Library",
+    "type": "library",
+    "require": {
+        "league/oauth2-client": "^2.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simon Finne",
+            "email": "simon.finne@loopon.com"
+        }
+    ],
+    "autoload": {
+        "psr-4" : {
+            "Loopon\\Apaleo\\Client\\" : "src"
+        }
+    }
+}
