@@ -1,27 +1,14 @@
 <?php
 /**
- * Simple example for connecting to the Apaleo API and retreiving the available inventory.
+ * PHP Implementation of Apaleo API.
  *
  * Copyright 2017 Loopon AB. See LICENSE for details (MIT License; free to use as you wish).
- *
- * Using OAuth2 library provided at:
- *     https://github.com/thephpleague/oauth2-client
- *
- * In order to download/install required libraries, first install composer:
- *     https://getcomposer.org/doc/00-intro.md
- *
- * Then download the required dependencies:
- *     $ composer install
- *
- * Finally update the credentials at the bottom of ApaleoApiExample.php:
- *     $lApaleoExample = new ApaleoClient('<URL OF YOUR APPLICATION>', '<USERNAME>', '<PASSWORD>');
  *
  * This code is provided as-is without warranty of any kind. If you do have questions/need assistance with this example,
  * feel free to contact Simon Finne <simon.finne@loopon.com> where I will try to respond if possible, but cannot
  * guarantee any support.
  *
- * Note that functionality of this exact example depends on your user having the properties.read scope.
- * Also note, that if you for any reason want to connect to Apaleo's staging environment, you need to update the
+ * Note, that if you for any reason want to connect to Apaleo's staging environment, you need to update the
  * ApaleoProvider::cIdentityUrl and ApaleoClient::cApiUrl configurations.
  *
  * Contact api@apaleo.com or see dev.apaleo.com for help regarding their api.
@@ -64,7 +51,7 @@ class Provider extends \League\OAuth2\Client\Provider\GenericProvider
 }
 
 /**
- * @brief Example Apaleo API client, which can authenticate and use the token to GET information from the api
+ * @brief Apaleo API client, which can authenticate and use the token to GET information from the API
  */
 class Client
 {
@@ -85,6 +72,21 @@ class Client
 	 */
 	private $mToken = null;
 
+	/**
+	 * @var BookingApi
+	 */
+	private $mBookingApi = null;
+
+	/**
+	 * @var InventoryApi
+	 */
+	private $mInventoryApi = null;
+
+	/**
+	 * @var RatePlanApi
+	 */
+	private $mRatePlanApi = null;
+	
 	const cApiUrl = 'https://api.apaleo.com/';
 
 	/**
@@ -99,16 +101,45 @@ class Client
 	}
 
 	/**
-	 * @brief Get and return the available inventory; default to 100 first hotels
+	 * @brief Return BookingApi, constructing it if needed
+	 * @return BookingApi
 	 */
-	public function getInventory(int $pPageNumber = 1, int $pPageSize = 100)
+	public function getBookingApi(): BookingApi
 	{
-		$lParametersArray = [];
-		return $this->get(	'inventory/properties',
-					[
-						'pageNumber' => ''.$pPageNumber,
-						'pageSize' => ''.$pPageSize
-					]);
+		if ($this->mBookingApi === null)
+		{
+			$this->mBookingApi = new BookingApi($this);
+		}
+
+		return $this->mBookingApi;
+	}
+
+	/**
+	 * @brief Return InventoryApi, constructing it if needed
+	 * @return InventoryApi
+	 */
+	public function getInventoryApi(): InventoryApi
+	{
+		if ($this->mInventoryApi === null)
+		{
+			$this->mInventoryApi = new InventoryApi($this);
+		}
+
+		return $this->mInventoryApi;
+	}
+
+	/**
+	 * @brief Return RatePlanApi, constructing it if needed
+	 * @return RatePlanApi
+	 */
+	public function getRatePlanApi(): RatePlanApi
+	{
+		if ($this->mRatePlanApi === null)
+		{
+			$this->mRatePlanApi = new RatePlanApi($this);
+		}
+
+		return $this->mRatePlanApi;
 	}
 
 	/**
@@ -128,7 +159,7 @@ class Client
 	/**
 	 * @brief Perform a GET request to the Apaleo API and return the decoded json data or null on error
 	 */
-	private function get(string $pApiEndpoint, array $pParameters)
+	public function get(string $pApiEndpoint, array $pParameters)
 	{
 		$lHeaders = ['Accept: application/json', 'Authorization: Bearer ' . $this->getToken()];
 
@@ -137,9 +168,23 @@ class Client
 			implode(
 				'&',
 				array_map(
-					function (string $pKey, string $pValue)
+					function (string $pKey, $pValue)
 					{
-						return $pKey . '=' . urlencode($pValue);
+						if (is_array($pValue))
+						{
+							$lValue = implode(
+									',',
+									array_map(
+										function (string $pElementValue)
+										{
+											return urlencode($pElementValue);
+										},
+										$pValue));
+						} else {
+							$lValue = urlencode($pValue);							
+						}
+
+						return $pKey . '=' . $lValue;
 					},
 					array_keys($pParameters),
 					array_values($pParameters)));

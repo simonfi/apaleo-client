@@ -31,6 +31,6 @@ require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/src/Client.php');
 
 $lApaleoClient = new Loopon\Apaleo\Client\Client('<URL OF YOUR APPLICATION>', '<USERNAME>', '<PASSWORD>');
-$lInventory = $lApaleoClient->getInventory();
+$lInventory = $lApaleoClient->getInventoryApi()->getProperties();
 print_r($lInventory);
 
