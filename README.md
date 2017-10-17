@@ -36,7 +36,7 @@ Once you have composer installed, create an empty new project and create a `comp
         }
     ],
     "require": {
-        "loopon/apaleo-client": "dev-master"
+        "loopon/apaleo-client": "v1.x-dev"
     }
 }
 ```
@@ -54,7 +54,7 @@ Now create a new file `ExampleClient.php` with the following contents:
 require(__DIR__ . '/vendor/autoload.php');
 
 $lApaleoClient = new Loopon\Apaleo\Client\Client('<URL OF YOUR APPLICATION>', '<USERNAME>', '<PASSWORD>');
-$lInventory = $lApaleoClient->getInventory();
+$lInventory = $lApaleoClient->getInventoryApi()->getProperties();
 print_r($lInventory);
 ```
 
@@ -90,13 +90,13 @@ In order to include the php library in your project, simply add the following en
 
 ```
     "require": {
-        "loopon/apaleo-client": "dev-master"
+        "loopon/apaleo-client": "v1.x-dev"
     }
 ```
 
 ## Built With
 
-* [Legue Oauth2](https://github.com/thephpleague/oauth2-client) - OAuth 2.0 Client
+* [League Oauth2](https://github.com/thephpleague/oauth2-client) - OAuth 2.0 Client
 
 
 ## Authors
@@ -110,12 +110,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contributing
 
-Currently the Client only includes the `getInventory()` method and mostly serves as an example how to connect to Apaleo. Our intention is to keep updating it as Apaleo's API and our (www.loopon.com) usage of it evolves, but pull requests for new features are greatly appreciated.
+Currently the Client is extremely limited and mostly serves as an example how to connect to Apaleo. Our intention is to keep updating it as Apaleo's API and our (www.loopon.com) usage of it evolves, but pull requests for new features are greatly appreciated.
 
 
 ## Acknowledgments
 
 * Thank you to Andrea Stubbe at Apaleo for all the help while building Loopon's integration to the Apaleo Open Hospitality Cloud
-
 
 
