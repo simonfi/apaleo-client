@@ -4,3 +4,6 @@ vendor
 # Don't maintain composer state in git repository
 composer.lock
 
+# Don't include Mac OS X Desktop Services Store
+.DS_Store
+
