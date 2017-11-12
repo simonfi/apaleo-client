@@ -26,11 +26,13 @@ class InventoryApi extends ApiBase
 	 */
 	public function getProperties(int $pPageNumber = 1, int $pPageSize = 100)
 	{
-		return $this->get(	'inventory/v1/properties',
+		$lProperties = $this->get(	'inventory/v1/properties',
 					[
 						'pageNumber' => ''.$pPageNumber,
 						'pageSize' => ''.$pPageSize
 					]);
+
+		return $lProperties->properties;
 	}
 
 	/**
@@ -40,11 +42,13 @@ class InventoryApi extends ApiBase
 					int $pPageNumber = 1,
 					int $pPageSize = 100)
 	{
-		return $this->get(	'inventory/v1/unit-groups',
-					[
-						'propertyId' => $pPropertyId,
-						'pageNumber' => ''.$pPageNumber,
-						'pageSize' => ''.$pPageSize
-					]);
+		$lUnitGroups = $this->get(	'inventory/v1/unit-groups',
+						[
+							'propertyId' => $pPropertyId,
+							'pageNumber' => ''.$pPageNumber,
+							'pageSize' => ''.$pPageSize
+						]);
+
+		return $lUnitGroups->unitGroups;
 	}
 }
