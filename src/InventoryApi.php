@@ -32,6 +32,11 @@ class InventoryApi extends ApiBase
 						'pageSize' => ''.$pPageSize
 					]);
 
+		if (!isset($lProperties->properties))
+		{
+			return [];
+		}
+
 		return $lProperties->properties;
 	}
 
@@ -49,6 +54,33 @@ class InventoryApi extends ApiBase
 							'pageSize' => ''.$pPageSize
 						]);
 
+		if (!isset($lUnitGroups->unitGroups))
+		{
+			return [];
+		}
+
 		return $lUnitGroups->unitGroups;
+	}
+
+	/**
+	 * @brief Get and return the available unit groups for the given property id
+	 */
+	public function getUnits(	string $pPropertyId,
+					int $pPageNumber = 1,
+					int $pPageSize = 100)
+	{
+		$lUnits = $this->get(	'inventory/v1/units',
+					[
+						'propertyId' => $pPropertyId,
+						'pageNumber' => ''.$pPageNumber,
+						'pageSize' => ''.$pPageSize
+					]);
+
+		if (!isset($lUnits->units))
+		{
+			return [];
+		}
+
+		return $lUnits->units;
 	}
 }

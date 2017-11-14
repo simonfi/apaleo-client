@@ -33,7 +33,7 @@ class BookingApi extends ApiBase
 					int $pPageSize = 100)
 	{
 		$lParametersArray = [];
-		return $this->get(	'booking/v1/reservations',
+		$lReservations = $this->get(	'booking/v1/reservations',
 					[
 						'propertyIds' => $pPropertyIds,
 						'from' => gmdate('Y-m-d\TH:i:s\Z', $pModifiedSince),
@@ -42,5 +42,12 @@ class BookingApi extends ApiBase
 						'pageNumber' => ''.$pPageNumber,
 						'pageSize' => ''.$pPageSize
 					]);
+
+		if (!isset($lReservations->reservations))
+		{
+			return [];
+		}
+
+		return $lReservations->reservations;
 	}
 }

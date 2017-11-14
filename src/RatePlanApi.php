@@ -30,11 +30,18 @@ class RatePlanApi extends ApiBase
 	{
 		$lParametersArray = [];
 
-		return $this->get(	'rateplan/v1/rate-plans',
+		$lRatePlans = $this->get(	'rateplan/v1/rate-plans',
 					[
 						'propertyId' => $pPropertyId,
 						'pageNumber' => ''.$pPageNumber,
 						'pageSize' => ''.$pPageSize
 					]);
+
+		if (!isset($lRatePlans->ratePlans))
+		{
+			return [];
+		}
+
+		return $lRatePlans->ratePlans;
 	}
 }
