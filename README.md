@@ -96,7 +96,7 @@ In order to include the php library in your project, simply add the following en
 
 ## Built With
 
-* [League Oauth2](https://github.com/thephpleague/oauth2-client) - OAuth 2.0 Client
+* [The PHP League OAuth2](https://github.com/thephpleague/oauth2-client) - OAuth 2.0 Client
 
 
 ## Authors
