@@ -20,7 +20,7 @@ Once you have composer installed, create an empty new project and create a `comp
 
 ```
 {
-    "name": "simonfi/apaleo-client-test",
+    "name": "LooponAB/apaleo-client-test",
     "type": "project",
     "authors": [
         {
@@ -32,7 +32,7 @@ Once you have composer installed, create an empty new project and create a `comp
         {
             "name": "loopon/apaleo-client",
             "type": "git",
-            "url": "https://github.com/simonfi/apaleo-client.git"
+            "url": "https://github.com/LooponAB/apaleo-client.git"
         }
     ],
     "require": {
@@ -81,7 +81,7 @@ In order to include the php library in your project, simply add the following en
         {
             "name": "loopon/apaleo-client",
             "type": "git",
-            "url": "https://github.com/simonfi/apaleo-client.git"
+            "url": "https://github.com/LooponAB/apaleo-client.git"
         }
     ],
 ```
