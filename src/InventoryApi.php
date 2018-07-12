@@ -41,6 +41,19 @@ class InventoryApi extends ApiBase
 	}
 
 	/**
+	 * @brief Get and return information (in all languages) of the given property
+	 */
+	public function getProperty(string $pPropertyId)
+	{
+		$lProperty = $this->get('inventory/v1/properties/' . $pPropertyId,
+					[
+						'languages' => 'ALL'
+					]);
+
+		return $lProperty;
+	}
+
+	/**
 	 * @brief Get and return the available unit groups for the given property id
 	 */
 	public function getUnitGroups(	string $pPropertyId,
@@ -63,7 +76,7 @@ class InventoryApi extends ApiBase
 	}
 
 	/**
-	 * @brief Get and return the available unit groups for the given property id
+	 * @brief Get and return the available units for the given property id
 	 */
 	public function getUnits(	string $pPropertyId,
 					int $pPageNumber = 1,
@@ -82,5 +95,18 @@ class InventoryApi extends ApiBase
 		}
 
 		return $lUnits->units;
+	}
+
+	/**
+	 * @brief Get and return information about the given unit (in all languages)
+	 */
+	public function getUnit(string $pUnitId)
+	{
+		$lUnit = $this->get(	'inventory/v1/units/' . $pUnitId,
+					[
+						'languages' => 'ALL'
+					]);
+
+		return $lUnit;
 	}
 }
