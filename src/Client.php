@@ -159,7 +159,7 @@ class Client
 	/**
 	 * @brief Perform a GET request to the Apaleo API and return the decoded json data or null on error
 	 */
-	public function get(string $pApiEndpoint, array $pParameters)
+	public function get(string $pApiEndpoint, array $pParameters): \stdClass
 	{
 		$lHeaders = ['Accept: application/json', 'Authorization: Bearer ' . $this->getToken()];
 
@@ -207,9 +207,14 @@ class Client
 		if ($lResponseData === false || curl_getinfo($lChannel, CURLINFO_HTTP_CODE) != 200)
 		{
 			$lInfo = curl_getinfo($lChannel);
-			error_log('curl_exec failed during transfer: (http code: ' . $lInfo['http_code'] . ', url: ' . $lInfo['url'] . ', error: ' . curl_error($lChannel) . ').');
+			$lErrorMessage = sprintf('curl_exec failed during transfer: (http code: %d, url: %s, error: %s)',
+							$lInfo['http_code'],
+							$lInfo['url'],
+							curl_error($lChannel));
+
 			curl_close($lChannel);
-			return null;
+
+			throw new RuntimeException($lErrorMessage);
 		}
 
 		curl_close($lChannel);
