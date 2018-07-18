@@ -214,7 +214,7 @@ class Client
 
 			curl_close($lChannel);
 
-			throw new RuntimeException($lErrorMessage);
+			throw new \RuntimeException($lErrorMessage);
 		}
 
 		curl_close($lChannel);
