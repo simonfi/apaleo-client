@@ -38,7 +38,6 @@ class BookingApi extends ApiBase
 						'expand' => 'booker,property,unit',
 						'propertyIds' => $pPropertyIds,
 						'from' => gmdate('Y-m-d\TH:i:s\Z', $pModifiedSince),
-						'status' => 'Confirmed',
 						'dateFilter' => 'Modification',
 						'pageNumber' => ''.$pPageNumber,
 						'pageSize' => ''.$pPageSize
