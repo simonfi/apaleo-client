@@ -35,6 +35,7 @@ class BookingApi extends ApiBase
 		$lParametersArray = [];
 		$lReservations = $this->get(	'booking/v1/reservations',
 					[
+						'expand' => 'booker,property,unit',
 						'propertyIds' => $pPropertyIds,
 						'from' => gmdate('Y-m-d\TH:i:s\Z', $pModifiedSince),
 						'status' => 'Confirmed',
@@ -49,5 +50,21 @@ class BookingApi extends ApiBase
 		}
 
 		return $lReservations->reservations;
+	}
+
+	/**
+	 * @brief Get and return detailed info on a specific reservation
+	 *
+	 * @param string $pReservationId 
+	 */
+	public function getReservation(string $pReservationId)
+	{
+		$lParametersArray = [];
+		$lReservation = $this->get(	'booking/v1/reservations/' . $pReservationId,
+					[
+						'expand' => 'booker,property,unit'
+					]);
+
+		return $lReservation;
 	}
 }
