@@ -32,8 +32,8 @@ class BookingApi extends ApiBase
 					int $pPageNumber = 1,
 					int $pPageSize = 100)
 	{
-		$lParametersArray = [];
-		$lReservations = $this->get(	'booking/v1/reservations',
+		$lReservations = $this->get(
+					'booking/v1/reservations',
 					[
 						'expand' => 'booker,property,unit',
 						'propertyIds' => $pPropertyIds,
@@ -59,12 +59,22 @@ class BookingApi extends ApiBase
 	 */
 	public function getReservation(string $pReservationId)
 	{
-		$lParametersArray = [];
-		$lReservation = $this->get(	'booking/v1/reservations/' . $pReservationId,
+		$lReservation = $this->get(
+					'booking/v1/reservations/' . $pReservationId,
 					[
 						'expand' => 'booker,property,unit'
 					]);
 
 		return $lReservation;
+	}
+
+	/**
+	 * @brief Assign a random available unit to the given reservation
+	 * @param string $pReservationId
+	 */
+	public function assignUnitForReservation(string $pReservationId)
+	{
+		$lRoomInfo = $this->put('booking/v1/reservation-actions/' . $pReservationId . '/assign-unit', []);
+		return $lRoomInfo;
 	}
 }
