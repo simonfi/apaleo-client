@@ -39,4 +39,9 @@ abstract class ApiBase
 	{
 		return $this->mClient->get($pApiEndpoint, $pParameters);
 	}
+
+	protected function put(string $pApiEndpoint, array $pParameters)
+	{
+		return $this->mClient->put($pApiEndpoint, $pParameters);
+	}
 }
