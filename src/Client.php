@@ -196,7 +196,7 @@ class Client
 	/**
 	 * @brief Perform a GET request to the Apaleo API and return the decoded json data or null on error
 	 */
-	public function get(string $pApiEndpoint, array $pParameters): \stdClass
+	public function get(string $pApiEndpoint, array $pParameters): ?\stdClass
 	{
 		$lHeaders = ['Accept: application/json', 'Authorization: Bearer ' . $this->getToken()];
 
@@ -234,7 +234,7 @@ class Client
 	/**
 	 * @brief Perform a PUT request to the Apaleo API and return the decoded json data or null on error
 	 */
-	public function put(string $pApiEndpoint, array $pParameters): \stdClass
+	public function put(string $pApiEndpoint, array $pParameters): ?\stdClass
 	{
 		$lHeaders = ['Accept: application/json', 'Authorization: Bearer ' . $this->getToken()];
 
