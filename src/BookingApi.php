@@ -67,6 +67,22 @@ class BookingApi extends ApiBase
 		return $lReservation;
 	}
 
+
+	/**
+	 * @brief Get and return detailed info on a specific booking
+	 *
+	 * @param string $pBookingId
+	 */
+	public function getBooking(string $pBookingId)
+	{
+		$lBooking = $this->get(
+			'booking/v1/bookings/' . $pBookingId,
+			[]);
+
+		return $lBooking;
+	}
+
+
 	/**
 	 * @brief Assign a random available unit to the given reservation
 	 * @param string $pReservationId
