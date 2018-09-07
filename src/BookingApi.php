@@ -61,7 +61,7 @@ class BookingApi extends ApiBase
 		$lReservation = $this->get(
 					'booking/v1/reservations/' . $pReservationId,
 					[
-						'expand' => 'booker,property,unit'
+						'expand' => 'booker,property,unit,ratePlan'
 					]);
 
 		return $lReservation;

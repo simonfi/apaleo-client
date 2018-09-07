@@ -44,4 +44,18 @@ class RatePlanApi extends ApiBase
 
 		return $lRatePlans->ratePlans;
 	}
+
+	/**
+	 * @brief Get and return information (in all languages) of the given rate plane
+	 */
+	public function getRatePlan(string $pRatePlanId)
+	{
+		$lProperty = $this->get('rateplan/v1/rate-plans/' . $pRatePlanId,
+					[
+						'languages' => 'ALL',
+						'expand' => 'cancellationPolicy'
+					]);
+
+		return $lProperty;
+	}
 }
