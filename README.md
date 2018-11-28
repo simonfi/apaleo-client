@@ -8,7 +8,7 @@ Built by Loopon for use in our own Guest Communication Suite (www.loopon.com) wh
 
 This code has been written for and tested in PHP 7.1. It will not work on anything earlier than PHP 7 due to the usage of strict typing.
 
-To do anything meaningful with this code, you first need to obtain user credentials from Apaleo; contact them at api@apaleo.com for details.
+To do anything meaningful with this code, you first need to obtain credentials from Apaleo. Check https://apaleo.com/getting-started-with-apaleo-apis/ for details.
 
 ### Prerequisites
 
