@@ -46,15 +46,29 @@ class RatePlanApi extends ApiBase
 	}
 
 	/**
-	 * @brief Get and return information (in all languages) of the given rate plane
+	 * @brief Get and return information of the given rate plan.
+	 * The rate plan includes the description in all available languages.
+	 * The cancellation policy is included in the rate plan. The cancellation policy description has one
+	 * 'description' member, in only one language. If $pLanguageCode is specified, then apaleo will return the
+	 * cancellation policy description in the specified language, in case the description is available in that
+	 * language. If the cancellation policy description is not available in the specified language, or
+	 * if $pLanguageCode is null, apaleo will return the description in the default language.
+	 * @param string $pRatePlanId
+	 * @param string|null $pLanguageCode
+	 * @return \stdClass|null
 	 */
-	public function getRatePlan(string $pRatePlanId)
+	public function getRatePlan(string $pRatePlanId, ?string $pLanguageCode) : ?\stdClass
 	{
-		$lProperty = $this->get('rateplan/v1/rate-plans/' . $pRatePlanId,
-					[
-						'languages' => 'ALL',
-						'expand' => 'cancellationPolicy'
-					]);
+		$lLanguageHeader = $pLanguageCode !== null ? ['Accept-language: ' . $pLanguageCode] : [];
+
+		$lProperty = $this->get(
+		'rateplan/v1/rate-plans/' . $pRatePlanId,
+			[
+				'languages' => 'ALL',
+				'expand' => 'cancellationPolicy'
+			],
+			$lLanguageHeader
+		);
 
 		return $lProperty;
 	}
