@@ -35,9 +35,9 @@ abstract class ApiBase
 		$this->mClient = $pClient;
 	}
 
-	protected function get(string $pApiEndpoint, array $pParameters)
+	protected function get(string $pApiEndpoint, array $pParameters, array $pHeaders = [])
 	{
-		return $this->mClient->get($pApiEndpoint, $pParameters);
+		return $this->mClient->get($pApiEndpoint, $pParameters, $pHeaders);
 	}
 
 	protected function put(string $pApiEndpoint, array $pParameters)

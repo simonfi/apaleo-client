@@ -48,13 +48,18 @@ class RatePlanApi extends ApiBase
 	/**
 	 * @brief Get and return information (in all languages) of the given rate plane
 	 */
-	public function getRatePlan(string $pRatePlanId)
+	public function getRatePlan(string $pRatePlanId, ?string $pLanguageCode)
 	{
-		$lProperty = $this->get('rateplan/v1/rate-plans/' . $pRatePlanId,
-					[
-						'languages' => 'ALL',
-						'expand' => 'cancellationPolicy'
-					]);
+		$lLanguageHeader = $pLanguageCode !== null ? ['Accept-language: ' . $pLanguageCode] : [];
+
+		$lProperty = $this->get(
+		'rateplan/v1/rate-plans/' . $pRatePlanId,
+			[
+				'languages' => 'ALL',
+				'expand' => 'cancellationPolicy'
+			],
+			$lLanguageHeader
+		);
 
 		return $lProperty;
 	}

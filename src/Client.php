@@ -196,9 +196,13 @@ class Client
 	/**
 	 * @brief Perform a GET request to the Apaleo API and return the decoded json data or null on error
 	 */
-	public function get(string $pApiEndpoint, array $pParameters): ?\stdClass
+	public function get(string $pApiEndpoint, array $pParameters, array $pHeaders = []): ?\stdClass
 	{
-		$lHeaders = ['Accept: application/json', 'Authorization: Bearer ' . $this->getToken()];
+		$lHeaders = array_merge(
+			$pHeaders,
+			['Accept: application/json', 'Authorization: Bearer ' . $this->getToken()]
+		);
+
 
 		$lUrl = $this->getUrlWithQueryParameters($pApiEndpoint, $pParameters);
 
