@@ -24,9 +24,10 @@ class RatePlanApi extends ApiBase
 	/**
 	 * @brief Get and return the available rate plans for the given property
 	 */
-	public function getRatePlans(	string $pPropertyId,
-					int $pPageNumber = 1,
-					int $pPageSize = 100)
+	public function getRatePlans(
+				string $pPropertyId,
+				int $pPageNumber = 1,
+				int $pPageSize = 100)
 	{
 		$lParametersArray = [];
 
@@ -57,7 +58,9 @@ class RatePlanApi extends ApiBase
 	 * @param string|null $pLanguageCode
 	 * @return \stdClass|null
 	 */
-	public function getRatePlan(string $pRatePlanId, ?string $pLanguageCode) : ?\stdClass
+	public function getRatePlan(
+				string $pRatePlanId,
+				?string $pLanguageCode) : ?\stdClass
 	{
 		$lLanguageHeader = $pLanguageCode !== null ? ['Accept-language: ' . $pLanguageCode] : [];
 
