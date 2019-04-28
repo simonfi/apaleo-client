@@ -56,15 +56,17 @@ class InventoryApi extends ApiBase
 	/**
 	 * @brief Get and return the available unit groups for the given property id
 	 */
-	public function getUnitGroups(	string $pPropertyId,
-					int $pPageNumber = 1,
-					int $pPageSize = 100)
+	public function getUnitGroups(
+				string $pPropertyId,
+				int $pPageNumber = 1,
+				int $pPageSize = 100)
 	{
 		$lUnitGroups = $this->get(	'inventory/v1/unit-groups',
 						[
 							'propertyId' => $pPropertyId,
+							'languages' => 'all',
 							'pageNumber' => ''.$pPageNumber,
-							'pageSize' => ''.$pPageSize
+							'pageSize' => ''.$pPageSize,
 						]);
 
 		if (!isset($lUnitGroups->unitGroups))
@@ -76,11 +78,32 @@ class InventoryApi extends ApiBase
 	}
 
 	/**
+	 * @brief Get and return the available unit groups for the given property id
+	 */
+	public function getUnitGroup(string $pUnitGroupId, string $pLanguageCode = null)
+	{
+		if ($pLanguageCode === null)
+		{
+			$lLanguages = 'all';
+		} else {
+			$lLanguages = $pLanguageCode;
+		}
+
+		$lUnitGroup = $this->get(	'inventory/v1/unit-groups/' . $pUnitGroupId,
+						[
+							'languages' => $lLanguages
+						]);
+
+		return $lUnitGroup;
+	}
+	
+	/**
 	 * @brief Get and return the available units for the given property id
 	 */
-	public function getUnits(	string $pPropertyId,
-					int $pPageNumber = 1,
-					int $pPageSize = 100)
+	public function getUnits(
+				string $pPropertyId,
+				int $pPageNumber = 1,
+				int $pPageSize = 100)
 	{
 		$lUnits = $this->get(	'inventory/v1/units',
 					[
