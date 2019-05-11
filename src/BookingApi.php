@@ -30,27 +30,42 @@ class BookingApi extends ApiBase
 	public function getReservations(array $pPropertyIds,
 					int $pModifiedSince,					
 					int $pPageNumber = 1,
-					int $pPageSize = 100)
+					int $pPageSize = 100,
+					bool $pReturnAllPages = false)
 	{
-		$lReservations = $this->get(
-					'booking/v1/reservations',
-					[
-						'expand' => 'booker,property,unit',
-						'propertyIds' => $pPropertyIds,
-						'from' => gmdate('Y-m-d\TH:i:s\Z', $pModifiedSince),
-						'dateFilter' => 'Modification',
-						'pageNumber' => ''.$pPageNumber,
-						'pageSize' => ''.$pPageSize
-					]);
+		$lReservations = [];
+		$lPageNumber = $pPageNumber;
+		$lPageSize = $pPageSize;
 
-		if (!isset($lReservations->reservations))
+		$lReservationsArray = [];
+		do
 		{
-			return [];
-		}
+			$lReservations = $this->get(
+						'booking/v1/reservations',
+						[
+							'expand' => 'booker,property,unit',
+							'propertyIds' => $pPropertyIds,
+							'from' => gmdate('Y-m-d\TH:i:s\Z', $pModifiedSince),
+							'dateFilter' => 'Modification',
+							'pageNumber' => ''.$lPageNumber,
+							'pageSize' => ''.$lPageSize
+						]);
 
-		return $lReservations->reservations;
+			if (isset($lReservations->reservations))
+			{
+				$lReservationsArray = array_merge(
+							$lReservationsArray,
+							$lReservations->reservations);
+			}
+
+			$lPageNumber++;
+		} while ($pReturnAllPages &&
+			isset($lReservations->reservations) &&
+			count($lReservations->reservations) > 0);
+
+		return $lReservationsArray;
 	}
-
+	
 	/**
 	 * @brief Get and return detailed info on a specific reservation
 	 *
