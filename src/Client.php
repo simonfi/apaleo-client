@@ -86,7 +86,12 @@ class Client
 	 * @var RatePlanApi
 	 */
 	private $mRatePlanApi = null;
-	
+
+	/**
+	 * @var FinanceApi
+	 */
+	private $mFinanceApi = null;
+
 	const cApiUrl = 'https://api.apaleo.com/';
 
 	/**
@@ -140,6 +145,20 @@ class Client
 		}
 
 		return $this->mRatePlanApi;
+	}
+
+	/**
+	 * @brief Return FinanceApi, constructing it if needed
+	 * @return FinanceApi
+	 */
+	public function getFinanceApi(): FinanceApi
+	{
+		if ($this->mFinanceApi === null)
+		{
+			$this->mFinanceApi = new FinanceApi($this);
+		}
+
+		return $this->mFinanceApi;
 	}
 
 	/**

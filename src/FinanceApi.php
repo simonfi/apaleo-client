@@ -40,7 +40,7 @@ class FinanceApi extends ApiBase
 
 		return $lInvoices->invoices;
 	}
-	
+
 	public function getInvoicePdf(string $pInvoiceId)
 	{
 		return $this->getRaw(	'finance/v1/invoices/' . $pInvoiceId . '/pdf',
