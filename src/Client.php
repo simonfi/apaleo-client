@@ -236,6 +236,44 @@ class Client
 	}
 
 	/**
+	 * @brief Perform a GET request to the Apaleo API and return the raw data or null on error
+	 */
+	public function getRaw(string $pApiEndpoint, array $pParameters): ?string
+	{
+		$lHeaders = ['Accept: application/json', 'Authorization: Bearer ' . $this->getToken()];
+
+		$lUrl = $this->getUrlWithQueryParameters($pApiEndpoint, $pParameters);
+
+		$lChannel = curl_init($lUrl);
+		curl_setopt($lChannel, CURLOPT_HEADER, 0);
+		curl_setopt($lChannel, CURLOPT_FOLLOWLOCATION, 0);
+		curl_setopt($lChannel, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($lChannel, CURLOPT_REFERER, $this->mClientUrl);
+		curl_setopt($lChannel, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($lChannel, CURLOPT_HTTPHEADER, $lHeaders);
+
+		$lResponseData = curl_exec($lChannel);
+		$lStatusCode = curl_getinfo($lChannel, CURLINFO_HTTP_CODE);
+
+		if ($lResponseData === false || $lStatusCode < 200 || $lStatusCode >= 300)
+		{
+			$lInfo = curl_getinfo($lChannel);
+			$lErrorMessage = sprintf('curl_exec failed during transfer: (http code: %d, url: %s, error: %s)',
+							$lInfo['http_code'],
+							$lInfo['url'],
+							curl_error($lChannel));
+
+			curl_close($lChannel);
+
+			throw new \RuntimeException($lErrorMessage, $lStatusCode);
+		}
+
+		curl_close($lChannel);
+
+		return $lResponseData;
+	}
+
+	/**
 	 * @brief Perform a PUT request to the Apaleo API and return the decoded json data or null on error
 	 */
 	public function put(string $pApiEndpoint, array $pParameters): ?\stdClass

@@ -40,6 +40,11 @@ abstract class ApiBase
 		return $this->mClient->get($pApiEndpoint, $pParameters, $pHeaders);
 	}
 
+	protected function getRaw(string $pApiEndpoint, array $pParameters)
+	{
+		return $this->mClient->getRaw($pApiEndpoint, $pParameters);
+	}
+
 	protected function put(string $pApiEndpoint, array $pParameters)
 	{
 		return $this->mClient->put($pApiEndpoint, $pParameters);
