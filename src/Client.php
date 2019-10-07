@@ -167,11 +167,11 @@ class Client
 	private function getToken()
 	{
 		// If we don't already have the access token, request it
-		if ($this->mToken === null)
+		if ($this->mToken === null || ($this->mToken->getExpires() - time()) < 60)
 		{
 			$this->mToken = $this->mApaleoProvider->getAccessToken('client_credentials', []);
 		}
-
+				
 		return $this->mToken->getToken();
 	}
 
